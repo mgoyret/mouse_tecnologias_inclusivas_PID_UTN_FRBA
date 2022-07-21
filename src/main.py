@@ -8,10 +8,10 @@ import myConfig as mc
 
 if __name__ == "__main__":
 
-
-    td_bienvenida = td.Thread(target=ad.tss, args=['Hola! bienvenido al mouse controlado'])
-    td_bienvenida.daemon = True
-    td_bienvenida.start()
+# comento por comodidad al probar
+#    td_bienvenida = td.Thread(target=ad.tss, args=['Hola! bienvenido al mouse controlado'])
+#    td_bienvenida.daemon = True
+#    td_bienvenida.start()
 
     root = Gui()
     # el siguiente flag se mata desde el server_socket, ver nota alli
@@ -30,7 +30,8 @@ if __name__ == "__main__":
     root.start_gui()
     print(f'{__name__}: interfaz cerrada')
 
-    ad.tss('Hasta luego!')
+# comento por comodidad al probar
+#    ad.tss('Hasta luego!')
 
     mc.main_alive = False
     # margen de tiempo para que mueran threads

@@ -18,7 +18,7 @@ def sc_mouse(x:gui.Gui, cant:int):
 
 def mouse(x:gui.Gui):
 
-    val = 10
+    val = mc.velocidad_puntero
     # para que la velocidad de movimiento no cambie al mover en diagonal
     # hago que el modulo del vector movimiento en diagonal sea igual a
     # cuando el movimiento es horizontal o vertical

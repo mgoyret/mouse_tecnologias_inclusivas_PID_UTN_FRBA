@@ -1,7 +1,7 @@
 from time import sleep
 import tkinter as tk
 import myConfig as mc
-
+from PIL import ImageTk, Image
 # se define la clase de la ventana principal, con un frame dentro
 # con los labes deseados
 
@@ -16,91 +16,139 @@ class Window(tk.Frame):
 
         self.color_flag = bool(True)
 
-        coordsLabels = tk.LabelFrame(self, text='Direcciones')
-        coordsLabels.grid(row=0, column=0)
+        self.coordsLabels = tk.LabelFrame(self, text='Direcciones')
+        self.coordsLabels.grid(row=0, column=0)
 
-        self.lb_N = tk.Label(coordsLabels, text='norte',
-                             bg='light blue', font=('bold', 20))
-        self.lb_N.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
+        self.img_ul = {"black": ImageTk.PhotoImage(Image.open("../recursos/up_left_arrow_b.png")), "red": ImageTk.PhotoImage(Image.open("../recursos/up_left_arrow_r.png"))}
+        self.lbl_ul = tk.Label(self.coordsLabels, image = self.img_ul["black"])
+        self.lbl_ul.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
 
-        self.lb_S = tk.Label(coordsLabels, text='sur',
-                             bg='light blue', font=('bold', 20))
-        self.lb_S.grid(row=2, column=1, padx=2, pady=2, sticky='nesw')
+        self.img_u = {"black": ImageTk.PhotoImage(Image.open("../recursos/up_arrow_b.png")), "red": ImageTk.PhotoImage(Image.open("../recursos/up_arrow_r.png"))}
+        self.lbl_u = tk.Label(self.coordsLabels, image = self.img_u["black"])
+        self.lbl_u.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
 
-        self.lb_E = tk.Label(coordsLabels, text='este',
-                             bg='light blue', font=('bold', 20))
-        self.lb_E.grid(row=1, column=2, padx=2, pady=2, sticky='nesw')
+        self.img_ur = {"black": ImageTk.PhotoImage(Image.open("../recursos/up_right_arrow_b.png")), "red": ImageTk.PhotoImage(Image.open("../recursos/up_right_arrow_r.png"))}
+        self.lbl_ur = tk.Label(self.coordsLabels, image = self.img_ur["black"])
+        self.lbl_ur.grid(row=0, column=2, padx=2, pady=2, sticky='nesw')
 
-        self.lb_O = tk.Label(coordsLabels, text='oeste',
-                             bg='light blue', font=('bold', 20))
-        self.lb_O.grid(row=1, column=0, padx=2, pady=2, sticky='nesw')
+        self.img_l = {"black": ImageTk.PhotoImage(Image.open("../recursos/left_arrow_b.png")), "red": ImageTk.PhotoImage(Image.open("../recursos/left_arrow_r.png"))}
+        self.lbl_l = tk.Label(self.coordsLabels, image = self.img_l["black"])
+        self.lbl_l.grid(row=1, column=0, padx=2, pady=2, sticky='nesw')
 
-        self.lb_NE = tk.Label(coordsLabels, text='noreste',
-                              bg='light blue', font=('bold', 20))
-        self.lb_NE.grid(row=0, column=2, padx=2, pady=2, sticky='nesw')
+        self.img_r = {"black": ImageTk.PhotoImage(Image.open("../recursos/right_arrow_b.png")), "red": ImageTk.PhotoImage(Image.open("../recursos/right_arrow_r.png"))}
+        self.lbl_r = tk.Label(self.coordsLabels, image = self.img_r["black"])
+        self.lbl_r.grid(row=1, column=2, padx=2, pady=2, sticky='nesw')
 
-        self.lb_NO = tk.Label(coordsLabels, text='noroeste',
-                              bg='light blue', font=('bold', 20))
-        self.lb_NO.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
+        self.img_dl = {"black": ImageTk.PhotoImage(Image.open("../recursos/down_left_arrow_b.png")), "red": ImageTk.PhotoImage(Image.open("../recursos/down_left_arrow_r.png"))}
+        self.lbl_dl = tk.Label(self.coordsLabels, image = self.img_dl["black"])
+        self.lbl_dl.grid(row=2, column=0, padx=2, pady=2, sticky='nesw')
 
-        self.lb_SE = tk.Label(coordsLabels, text='sudeste',
-                              bg='light blue', font=('bold', 20))
-        self.lb_SE.grid(row=2, column=2, padx=2, pady=2, sticky='nesw')
+        self.img_d = {"black": ImageTk.PhotoImage(Image.open("../recursos/down_arrow_b.png")), "red": ImageTk.PhotoImage(Image.open("../recursos/down_arrow_r.png"))}
+        self.lbl_d = tk.Label(self.coordsLabels, image = self.img_d["black"])
+        self.lbl_d.grid(row=2, column=1, padx=2, pady=2, sticky='nesw')
 
-        self.lb_SO = tk.Label(coordsLabels, text='sudoeste',
-                              bg='light blue', font=('bold', 20))
-        self.lb_SO.grid(row=2, column=0, padx=2, pady=2, sticky='nesw')
-
+        self.img_dr = {"black": ImageTk.PhotoImage(Image.open("../recursos/down_right_arrow_b.png")), "red": ImageTk.PhotoImage(Image.open("../recursos/down_right_arrow_r.png"))}
+        self.lbl_dr = tk.Label(self.coordsLabels, image = self.img_dr["red"])
+        self.lbl_dr.grid(row=2, column=2, padx=2, pady=2, sticky='nesw')
+        
         packLabels = tk.LabelFrame(self)
         packLabels.grid(row=0, column=1)
 
         clickLabels = tk.LabelFrame(packLabels, text='clicks')
         clickLabels.grid(row=0, column=0)
 
-        self.lb_CI = tk.Label(clickLabels, text='ci',
-                              bg='light blue', font=('bold', 20))
-        self.lb_CI.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
+        self.img_ci = ImageTk.PhotoImage(Image.open("../recursos/click.png"))
+        self.lbl_ci = tk.Label(clickLabels, image = self.img_ci)
+        self.lbl_ci.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
 
-        self.lb_CD = tk.Label(clickLabels, text='cd',
-                              bg='light blue', font=('bold', 20))
-        self.lb_CD.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
+        self.img_cd = ImageTk.PhotoImage(Image.open("../recursos/click.png"))
+        self.lbl_cd = tk.Label(clickLabels, image = self.img_cd)
+        self.lbl_cd.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
+#########################################################################################
+        
+        self.idx = {
+            "ul":   "b",
+            "u":    "b",
+            "ur":   "b",
+            "l":    "b",
+            "r":    "b",
+            "dl":   "b",
+            "d":    "b",
+            "dr":   "r"
+        }
 
-        ruedaLabels = tk.LabelFrame(packLabels, text='Rueda')
-        ruedaLabels.grid(row=1, column=0)
-
-        self.lb_rueda_N = tk.Label(
-            ruedaLabels, text='rueda_N', bg='light blue', font=('bold', 12))
-        self.lb_rueda_N.grid(row=0, column=3, padx=2, pady=2, sticky='nesw')
-
-        self.lb_rueda_S = tk.Label(
-            ruedaLabels, text='rueda_S', bg='light blue', font=('bold', 12))
-        self.lb_rueda_S.grid(row=2, column=3, padx=2, pady=2, sticky='nesw')
-
-        # SE es el ultimo boton, lo pongo pink para que en la primera
-        # ejecucion de color() se cambie a NO
-        self.lb_rueda_C = tk.Label(
-            ruedaLabels, text='rueda_C', bg='pink', font=('bold', 12))
-        self.lb_rueda_C.grid(row=1, column=3, padx=2, pady=2, sticky='nesw')
-
-        self.idx = [self.lb_NO, self.lb_N, self.lb_NE, self.lb_O, self.lb_E, self.lb_SO, self.lb_S,
-                    self.lb_SE, self.lb_CI, self.lb_CD, self.lb_rueda_N, self.lb_rueda_S, self.lb_rueda_C]
         self.color()
 
-    # esta funcion miembro analiza cuando un label tiene color rosa
-    # y lo pone el azul, para luego poner el siguiente en rosa
     def color(self):
         if self.color_flag:
-            for i in range(len(self.idx)):
-                if self.idx[i].cget('background') == 'pink':
-                    self.idx[i].configure(bg='light blue')
-                    self.idx[(i+1) % 13].configure(bg='pink')
+            for i in self.idx:
+                if self.idx[i] == 'r':
+                    if i == 'ul':
+                        self.lbl_ul = tk.Label(self.coordsLabels, image = self.img_ul["black"])
+                        self.lbl_ul.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
+
+                        self.lbl_u = tk.Label(self.coordsLabels, image = self.img_u["red"])
+                        self.lbl_u.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
+                        self.idx['u']='r'
+
+                    if i == 'u':
+                        self.lbl_u = tk.Label(self.coordsLabels, image = self.img_u["black"])
+                        self.lbl_u.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
+
+                        self.lbl_ur = tk.Label(self.coordsLabels, image = self.img_ur["red"])
+                        self.lbl_ur.grid(row=0, column=2, padx=2, pady=2, sticky='nesw')
+                        self.idx['ur']='r'
+
+                    elif i == 'ur':
+                        self.lbl_ur = tk.Label(self.coordsLabels, image = self.img_ur["black"])
+                        self.lbl_ur.grid(row=0, column=2, padx=2, pady=2, sticky='nesw')
+
+                        self.lbl_l = tk.Label(self.coordsLabels, image = self.img_l["red"])
+                        self.lbl_l.grid(row=1, column=0, padx=2, pady=2, sticky='nesw')
+                        self.idx['l']='r'
+                    elif i == 'l':
+                        self.lbl_l = tk.Label(self.coordsLabels, image = self.img_l["black"])
+                        self.lbl_l.grid(row=1, column=0, padx=2, pady=2, sticky='nesw')
+
+                        self.lbl_r = tk.Label(self.coordsLabels, image = self.img_r["red"])
+                        self.lbl_r.grid(row=1, column=2, padx=2, pady=2, sticky='nesw')
+                        self.idx['r']='r'
+                    elif i == 'r':
+                        self.lbl_r = tk.Label(self.coordsLabels, image = self.img_r["black"])
+                        self.lbl_r.grid(row=1, column=2, padx=2, pady=2, sticky='nesw')
+
+                        self.lbl_dl = tk.Label(self.coordsLabels, image = self.img_dl["red"])
+                        self.lbl_dl.grid(row=2, column=0, padx=2, pady=2, sticky='nesw')
+                        self.idx['dl']='r'
+                    elif i == 'dl':
+                        self.lbl_dl = tk.Label(self.coordsLabels, image = self.img_dl["black"])
+                        self.lbl_dl.grid(row=2, column=0, padx=2, pady=2, sticky='nesw')
+
+                        self.lbl_d = tk.Label(self.coordsLabels, image = self.img_d["red"])
+                        self.lbl_d.grid(row=2, column=1, padx=2, pady=2, sticky='nesw')
+                        self.idx['d']='r'
+                    elif i == 'd':
+                        self.lbl_d = tk.Label(self.coordsLabels, image = self.img_d["black"])
+                        self.lbl_d.grid(row=2, column=1, padx=2, pady=2, sticky='nesw')
+
+                        self.lbl_dr = tk.Label(self.coordsLabels, image = self.img_dr["red"])
+                        self.lbl_dr.grid(row=2, column=2, padx=2, pady=2, sticky='nesw')
+                        self.idx['dr']='r'
+                    elif i == 'dr':
+                        self.lbl_dr = tk.Label(self.coordsLabels, image = self.img_dr["black"])
+                        self.lbl_dr.grid(row=2, column=2, padx=2, pady=2, sticky='nesw')
+
+                        self.lbl_ul = tk.Label(self.coordsLabels, image = self.img_ul["red"])
+                        self.lbl_ul.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
+                        self.idx['ul']='r'
+                    self.idx[i]='b'
                     break
-        self.after(1000, self.color)
+        self.after(mc.velocidad_barrido, self.color)
 
 
 class Gui(tk.Tk):
 
-    # defino esta variable para que sea iembro y luego
+    # defino esta variable para que sea miembro y luego
     # igualarla a la ventana principal de la gui
     wd = None
 
@@ -114,9 +162,9 @@ class Gui(tk.Tk):
         tk.Tk.__init__(self)
 
         self.title("Controlador de mouse")
-        self.geometry("400x300")
-        self.minsize(450, 350)
-        self.maxsize(450, 350)
+        self.geometry("600x600")
+        self.minsize(600, 600)
+        self.maxsize(600, 600)
         self.configure(background='#F2B33D')
 
         self.protocol("WM_DELETE_WINDOW", self.finish_gui)
