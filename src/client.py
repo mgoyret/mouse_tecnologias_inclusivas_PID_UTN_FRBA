@@ -18,30 +18,34 @@ def sk_send(msg: list):
 
     client_socket.close()
 
+
 def send_no_key():
     mc.myTecla = 0
     sk_send(list(['#$', 0, '$#']))
 
 
-def send_space_on():
+def send_action():
     mc.myTecla = 1
     sk_send(list(['#$', 1, '$#']))
 
 
-def send_esc():
+def send_exit():
     mc.myTecla = 2
     sk_send(list(['#$', 2, '$#']))
 
+# eligo action con escape porque la tecla de accionar tiene que ser una tecla que no
+# genere ninguna accion al prpesionarse
+# - shift: el scrolling se inhabilita
+# - block mayus: incomodo, nunca se si deje o no la mayuscula
+# - ctrl: con scrolling va a hacer zoom en general
+# - tab: tabula, o va desplazando selector en las ventanas
 if __name__ == '__main__':
     print(f'{__name__}: iniciado')
     while True:
-        if mc.myTecla != 0 and not kb.is_pressed('esc') and not kb.is_pressed('space'):
-    #        print(f'{__name__}: {mc.myTecla}: pongo 0')
+        if mc.myTecla != 0 and not kb.is_pressed(mc.exit_key) and not kb.is_pressed(mc.exit_key):
             send_no_key()
-        elif kb.is_pressed('space') and mc.myTecla != 1:
-    #        print(f'{__name__}: {mc.myTecla}: pongo 1')
-            send_space_on()
-        elif kb.is_pressed('esc') and mc.myTecla != 2:
-    #        print(f'{__name__}: {mc.myTecla}: pongo 2')
-            send_esc()
+        elif kb.is_pressed(mc.action_key) and mc.myTecla != 1:
+            send_action()
+        elif kb.is_pressed(mc.exit_key) and mc.myTecla != 2:
+            send_exit()
             break

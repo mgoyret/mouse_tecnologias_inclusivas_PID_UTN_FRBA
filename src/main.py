@@ -14,8 +14,6 @@ if __name__ == "__main__":
 #    td_bienvenida.start()
 
     root = Gui()
-    # el siguiente flag se mata desde el server_socket, ver nota alli
-    mc.gui_alive = True
 
     td_socket = td.Thread(target=sv.create_server, args=[root])
     td_socket.daemon = True

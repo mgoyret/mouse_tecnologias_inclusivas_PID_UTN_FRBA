@@ -39,7 +39,7 @@ def create_server(x):
     # en este caso, se debe matar la interfaz grafica, ya que se recibio comando de finalizacion
     # El problema es que el thread "mv_mouse" ejecutado desde el main, tiene relacion a la interfaz
     # grafica, y por como funciona tkinter, debe morir si o si antes de que lo haga la GUI. Por lo tanto
-    # desde aca mato al mouse mediante el flag "", y luego procedo a finalizar la GUI
+    # desde aca mato al mouse mediante el flag ".gui_alive" del cual depende el mouse, y luego procedo a finalizar la GUI
     mc.gui_alive = False
     # doy tiempo a que muera el thread "mv_mouse"
     sleep(1)
