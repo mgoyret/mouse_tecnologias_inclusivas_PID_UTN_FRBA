@@ -1,5 +1,6 @@
 import socket as sk
 import json as js
+from types import NoneType
 import myConfig as mc
 from time import sleep
 
@@ -20,7 +21,7 @@ def create_server(x):
     # prender servidor, ponerlo a la escucha
     server_socket.listen(5)
 
-    while True:
+    while mc.main_alive:
 #        print(f'{__name__}: esperando conexion')
         (client_socket, address) = server_socket.accept()
 #        print(f'{__name__}: socket conectado: escuchando')
@@ -33,7 +34,11 @@ def create_server(x):
             elif op == 0:
                 mc.tecla = False
             if op == 2:
-                break
+                if type(x.wd_use) != NoneType:
+                    x.wd_use.destroy()
+                if type(x.wd_config) != NoneType:
+                    x.wd_config.destroy()
+                #break
 #            print(f'{__name__}: despues {mc.tecla}')
     
     # en este caso, se debe matar la interfaz grafica, ya que se recibio comando de finalizacion
@@ -44,5 +49,4 @@ def create_server(x):
     # doy tiempo a que muera el thread "mv_mouse"
     sleep(1)
 
-    x.destroy()
     server_socket.close()

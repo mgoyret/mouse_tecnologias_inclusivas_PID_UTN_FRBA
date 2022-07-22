@@ -6,7 +6,8 @@ myTecla = int(0) # esto no iria, de esto se encarga el hw casco
 # modulo server recibe la senal, pone en False este flag por lo que el mouse muere
 # y luego el server mata la GUI con su handler. 
 gui_alive = False
-
+main_alive = True
+color_flag = bool(True)
 
 
 ##################### variables globales para setup
@@ -22,3 +23,6 @@ velocidad_puntero = 20
 # teclado - envio de senales
 action_key = 'esc'
 exit_key = 'shift'
+no_key_cod = 0
+action_code = 1
+exit_code = 2
