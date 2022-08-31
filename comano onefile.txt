@@ -1,0 +1,1 @@
+pyinstaller.exe --onefile --debug --paths=C:\Users\marco\OneDrive\Documentos\Facultad\PID\mouse_tecnologias_inclusivas_PID_UTN_FRBA\venv\Lib\site-packages .\main.py --debug all

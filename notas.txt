@@ -1,0 +1,22 @@
+URGENTE
+- opcion pausar barrido para que no moleste visualmente
+- logos de engranajes y cosas
+- mejorar interfaz en genera, visualmente
+- Emprolijar en cuanto a chequeo de errores
+- manual de usuario tecnico y diagrama de clases
+
+SECUNDARIO
+- hacer mas fluido el movimiento del mouse
+
+RESUELTO
+- modos simple (borrar diagonales) y avanzado (todo)
+- onefile que incluya bien las bibliotecas de venv
+- bajar resolucion de las imagenes
+- iconos en ventanas, en todas
+- Dejar toplevel wd_use siempre al frente
+- Emprolijar flag mc.in_window en cuanto a lugares donde es seteado
+- cambiar exit por salir
+
+CREO QUE YA ESTA
+- verificar cuando abro configuracion y no cierra. Es porque mantengo apretado el boton, y cierra pero abre al toque la siguiente ventana.
+        Hacer que se detecten los flancos, no el momento mientras se aprieta. Salvo para el barrido de las flechas.
