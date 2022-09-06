@@ -58,31 +58,31 @@ class Mouse():
                 elif mc.in_window == 'config':
                     mc.tecla = False
                     # los valores divididos por 5 es para que visualmente hayan 4 velocidades
-                    if x.wd_config.btn_5.cget('background') == 'red':
-                        x.wd_config.label_velocidad_puntero['text'] = f'Velocidad puntero: {int(5/5)}'
+                    if x.wd_config.wd.btn_5.cget('background') == 'red':
+                        x.wd_config.wd.label_velocidad_puntero['text'] = f'Velocidad puntero: {int(5/5)}'
                         mc.velocidad_puntero = 5
-                    elif x.wd_config.btn_10.cget('background') == 'red':
-                        x.wd_config.label_velocidad_puntero['text'] = f'Velocidad puntero: {int(10/5)}'
+                    elif x.wd_config.wd.btn_10.cget('background') == 'red':
+                        x.wd_config.wd.label_velocidad_puntero['text'] = f'Velocidad puntero: {int(10/5)}'
                         mc.velocidad_puntero = 10
-                    elif x.wd_config.btn_15.cget('background') == 'red':
-                        x.wd_config.label_velocidad_puntero['text'] = f'Velocidad puntero: {int(15/5)}'
+                    elif x.wd_config.wd.btn_15.cget('background') == 'red':
+                        x.wd_config.wd.label_velocidad_puntero['text'] = f'Velocidad puntero: {int(15/5)}'
                         mc.velocidad_puntero = 15
-                    elif x.wd_config.btn_20.cget('background') == 'red':
-                        x.wd_config.label_velocidad_puntero['text'] = f'Velocidad puntero: {int(20/5)}'
+                    elif x.wd_config.wd.btn_20.cget('background') == 'red':
+                        x.wd_config.wd.label_velocidad_puntero['text'] = f'Velocidad puntero: {int(20/5)}'
                         mc.velocidad_puntero = 20
-                    elif x.wd_config.btn_750.cget('background') == 'red':
-                        x.wd_config.label_velocidad_barrido['text'] = f'Velocidad barrido [ms]: {750}'
+                    elif x.wd_config.wd.btn_750.cget('background') == 'red':
+                        x.wd_config.wd.label_velocidad_barrido['text'] = f'Velocidad barrido [ms]: {750}'
                         mc.velocidad_barrido = 750
-                    elif x.wd_config.btn_1000.cget('background') == 'red':
-                        x.wd_config.label_velocidad_barrido['text'] = f'Velocidad barrido [ms]: {1000}'
+                    elif x.wd_config.wd.btn_1000.cget('background') == 'red':
+                        x.wd_config.wd.label_velocidad_barrido['text'] = f'Velocidad barrido [ms]: {1000}'
                         mc.velocidad_barrido = 1000
-                    elif x.wd_config.btn_1500.cget('background') == 'red':
-                        x.wd_config.label_velocidad_barrido['text'] = f'Velocidad barrido [ms]: {1500}'
+                    elif x.wd_config.wd.btn_1500.cget('background') == 'red':
+                        x.wd_config.wd.label_velocidad_barrido['text'] = f'Velocidad barrido [ms]: {1500}'
                         mc.velocidad_barrido = 1500
-                    elif x.wd_config.btn_2000.cget('background') == 'red':
-                        x.wd_config.label_velocidad_barrido['text'] = f'Velocidad barrido [ms]: {2000}'
+                    elif x.wd_config.wd.btn_2000.cget('background') == 'red':
+                        x.wd_config.wd.label_velocidad_barrido['text'] = f'Velocidad barrido [ms]: {2000}'
                         mc.velocidad_barrido = 2000
-                    elif x.wd_config.btn_aplicar.cget('background') == 'red':
+                    elif x.wd_config.wd.btn_aplicar.cget('background') == 'red':
                         self.actualizar_velocidad()
                         x.config_on_closing()
                     mc.color_flag = True

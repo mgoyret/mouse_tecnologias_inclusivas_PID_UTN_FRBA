@@ -41,7 +41,8 @@ class Server():
             (client_socket, address) = self.server_socket.accept()
             print(f'{__name__}: conectado a {client_socket}, {address}')
             while mc.main_alive:
-                print(f'{__name__}: escuchando')
+                
+                #print(f'{__name__}: escuchando')
                 # si esta esperando mensaje y la gui se cierra por la cruz, este thread queda aca
                 sk_msg = js.loads(client_socket.recv(4096).decode('UTF-8'))
                 op = self.check(sk_msg)
