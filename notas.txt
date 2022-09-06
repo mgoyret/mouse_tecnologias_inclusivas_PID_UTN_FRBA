@@ -3,6 +3,9 @@ URGENTE
 - Emprolijar en cuanto a chequeo de errores
 - manual de usuario tecnico y diagrama de clases
 
+- cuando cierran la ventana con la cruz, se cierra todo pero el socket server no es
+        finalizado correctamente. Igual creo que si, se cierra solo
+
 SECUNDARIO
 - hacer mas fluido el movimiento del mouse
 

@@ -6,9 +6,11 @@ myTecla = int(0)  # esto no iria, de esto se encarga el hw casco
 # al presionar la tecla de exit, el cliente envia por socket, y el
 # modulo server recibe la senal, pone en False este flag por lo que el mouse muere
 # y luego el server mata la GUI con su handler.
-gui_alive = False
-in_window = 'None'
 main_alive = True
+gui_alive = False
+mouse_alive = False
+socket_alive = False
+in_window = 'None'
 color_flag = bool(True)
 
 
@@ -45,12 +47,9 @@ size_settings = (100, 100)
 size_modo = (120, 100)
 
 # Imagenes - Recursos
-img_ul = img_u = img_ur = img_l = img_r = img_dl = img_d = img_dr = img_ci = img_cd = img_wu = img_wd = img_pausa = img_salir = None # = img_simple = img_avanzado = img_settings
+img_ul = img_u = img_ur = img_l = img_r = img_dl = img_d = img_dr = img_ci = img_cd = img_wu = img_wd = img_pausa = img_salir = None
 def cargar_fotos():
     global img_ul, img_u, img_ur, img_l, img_r, img_dl, img_d, img_dr, img_ci, img_cd, img_wu, img_wd, img_pausa, img_salir, img_simple, img_avanzado, img_settings
-#    img_settings = {"black": ImageTk.PhotoImage(Image.open("../recursos/settings_b.png").resize(size_modo)), "red": ImageTk.PhotoImage(Image.open("../recursos/settings_r.png").resize(size_modo))}
-#    img_simple = {"black": ImageTk.PhotoImage(Image.open("../recursos/simple_b.png").resize(size_modo)), "red": ImageTk.PhotoImage(Image.open("../recursos/simple_r.png").resize(size_modo))}
-#    img_avanzado = {"black": ImageTk.PhotoImage(Image.open("../recursos/avanzado_b.png").resize(size_modo)), "red": ImageTk.PhotoImage(Image.open("../recursos/avanzado_r.png").resize(size_modo))}
     img_ul = {"black": ImageTk.PhotoImage(Image.open("../recursos/up_left_arrow_b.png").resize(size_diagonal)), "red": ImageTk.PhotoImage(Image.open("../recursos/up_left_arrow_r.png").resize(size_diagonal))}
     img_u = {"black": ImageTk.PhotoImage(Image.open("../recursos/up_arrow_b.png").resize(size_vertical)), "red": ImageTk.PhotoImage(Image.open("../recursos/up_arrow_r.png").resize(size_vertical))}
     img_ur = {"black": ImageTk.PhotoImage(Image.open("../recursos/up_right_arrow_b.png").resize(size_diagonal)), "red": ImageTk.PhotoImage(Image.open("../recursos/up_right_arrow_r.png").resize(size_diagonal))}

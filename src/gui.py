@@ -1,13 +1,6 @@
-from cgitb import text
-from pickle import HIGHEST_PROTOCOL
-from time import sleep
 import tkinter as tk
-from tkinter import ttk
-from tkinter import font
-from turtle import back, bgcolor
 import myConfig as mc
 from PIL import ImageTk, Image
-from functools import partial
 # se define la clase de la ventana principal, con un frame dentro
 # con los labes deseados
 
@@ -87,13 +80,11 @@ class Window_use(tk.Frame):
         self.accionesLabels.grid(row=1, column=0)
 
         self.img_pausa = mc.img_pausa
-        self.lbl_pausa = tk.Label(
-            self.accionesLabels, image=self.img_pausa['black'], text='pausa', borderwidth=0, highlightthickness=0)
+        self.lbl_pausa = tk.Label(self.accionesLabels, image=self.img_pausa['black'], text='pausa', borderwidth=0, highlightthickness=0)
         self.lbl_pausa.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
 
         self.img_salir = mc.img_salir
-        self.lbl_salir = tk.Label(
-            self.accionesLabels, image=self.img_salir['black'], text='salir', borderwidth=0, highlightthickness=0)
+        self.lbl_salir = tk.Label(self.accionesLabels, image=self.img_salir['black'], text='salir', borderwidth=0, highlightthickness=0)
         self.lbl_salir.grid(row=1, column=0, padx=2, pady=2, sticky='nesw')
 
         self.idx = {
@@ -116,12 +107,11 @@ class Window_use(tk.Frame):
         self.color()
 
     def color(self):
-        if mc.color_flag:
+        if mc.color_flag and mc.gui_alive:
             for i in self.idx:
                 if self.idx[i] == 'r':
                     if i == 'ul':
-                        self.lbl_ul = tk.Label(
-                            self.coords_clicks_Labels, image=self.img_ul["black"])
+                        self.lbl_ul = tk.Label(self.coords_clicks_Labels, image=self.img_ul["black"])
                         self.lbl_ul.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
                         self.lbl_u = tk.Label(self.coords_clicks_Labels, image=self.img_u["red"])
                         self.lbl_u.grid(row=0, column=1, padx=2,pady=2, sticky='nesw')
@@ -256,8 +246,10 @@ class Gui(tk.Tk):
     wd_config = None
 
     def __init__(self):
+        mc.gui_alive = True # guarda, antes estaba en start gui que es cuando abre la interfaz
+        print(f'{__name__}: INICIO Gui()')
         tk.Tk.__init__(self)
-        self.title("Ventana Principal")
+        self.title("Mouse4All")
         self.geometry("300x250")
         self.resizable(False, False)
 #        self.configure(background='#F2B33D')
@@ -285,45 +277,56 @@ class Gui(tk.Tk):
         self.frame_modos = tk.LabelFrame(self.frame_general, background='white')
         self.frame_modos.grid(row=1, column=0)
 
-        self.img_avanzado = {"black": ImageTk.PhotoImage(Image.open("../recursos/avanzado_b.png").resize(mc.size_modo)), "red": ImageTk.PhotoImage(Image.open("../recursos/avanzado_r.png").resize(mc.size_modo))}
-        self.lbl_avanzado = tk.Label(self.frame_modos, image=self.img_avanzado["black"])
-        self.lbl_avanzado.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
-
         self.img_simple = {"black": ImageTk.PhotoImage(Image.open("../recursos/simple_b.png").resize(mc.size_modo)), "red": ImageTk.PhotoImage(Image.open("../recursos/simple_r.png").resize(mc.size_modo))}
-        self.lbl_simple = tk.Label(self.frame_modos, image=self.img_simple["red"])
-        self.lbl_simple.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
+        self.lbl_simple = tk.Label(self.frame_modos, image=self.img_simple["black"])
+        self.lbl_simple.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
+
+        self.img_avanzado = {"black": ImageTk.PhotoImage(Image.open("../recursos/avanzado_b.png").resize(mc.size_modo)), "red": ImageTk.PhotoImage(Image.open("../recursos/avanzado_r.png").resize(mc.size_modo))}
+        self.lbl_avanzado = tk.Label(self.frame_modos, image=self.img_avanzado["red"])
+        self.lbl_avanzado.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
 
         self.idx = {
             "settings": "b",
-            "avanzado": "b",
-            'simple':   'r'
+            "simple":   "b",
+            'avanzado': 'r'
         }
 
         self.color()
 
+    def start_gui(self):
+        mc.in_window = 'main'
+        self.mainloop()
+
+    def finish_gui(self):
+        mc.gui_alive = False
+        # damos tiempo a que muera "mouse" que usa la gui. El thread debe morir antes que la gui
+        while mc.mouse_alive:
+            pass
+        self.destroy()
+
     # esta funcion miembro analiza cuando un label tiene color rosa
     # y lo pone el azul, para luego poner el siguiente en rosa
     def color(self):
-        if mc.color_flag:
+        if mc.color_flag and mc.gui_alive:
             for i in self.idx:
                 if self.idx[i] == 'r':
                     if i == 'settings':
                         self.lbl_settings = tk.Label(self.frame_settings, image=self.img_settings['black'])
                         self.lbl_settings.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
-                        self.lbl_avanzado = tk.Label(self.frame_modos, image=self.img_avanzado["red"])
-                        self.lbl_avanzado.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
-                        self.idx['avanzado'] = 'r'
-
-                    elif i == 'avanzado':
-                        self.lbl_avanzado = tk.Label(self.frame_modos, image=self.img_avanzado["black"])
-                        self.lbl_avanzado.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
                         self.lbl_simple = tk.Label(self.frame_modos, image=self.img_simple["red"])
-                        self.lbl_simple.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
+                        self.lbl_simple.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
                         self.idx['simple'] = 'r'
 
                     elif i == 'simple':
                         self.lbl_simple = tk.Label(self.frame_modos, image=self.img_simple["black"])
-                        self.lbl_simple.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
+                        self.lbl_simple.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
+                        self.lbl_avanzado = tk.Label(self.frame_modos, image=self.img_avanzado["red"])
+                        self.lbl_avanzado.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
+                        self.idx['avanzado'] = 'r'
+
+                    elif i == 'avanzado':
+                        self.lbl_avanzado = tk.Label(self.frame_modos, image=self.img_avanzado["black"])
+                        self.lbl_avanzado.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
                         self.lbl_settings = tk.Label(self.frame_settings, image=self.img_settings['red'])
                         self.lbl_settings.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
                         self.idx['settings'] = 'r'
@@ -332,25 +335,15 @@ class Gui(tk.Tk):
 
         self.after(mc.velocidad_barrido, self.color)
 
-
-    def config_on_closing(self):
-        print("config on_closing 1") # DEBUG
-        mc.in_window = 'main'
-        print("config on_closing 2") # DEBUG
-        self.wd_config.destroy()
-        print("config on_closing 3") # DEBUG
-        self.deiconify()  # muestra nuevamente mainwindow
-
-    def use_on_closing(self):
-        print('cerrando ventana [use]')
-        mc.in_window = 'main'
-        self.wd_use.destroy()
-        self.deiconify()  # muestra nuevamente mainwindow
+        # si destruyo la gui desde el server, nunca sale de la funcion destroy() por lo que
+        # el thread server se queda tildado ahi. Desde el server apago el flag alive, y esta funcion
+        # se encarga de destruir
+        if not mc.gui_alive: self.destroy()
 
     def open_config(self):
-        print("config START") # DEBUG
+        print(f'{__name__}: open_config()')
         self.wd_config = tk.Toplevel(self)
-        self.wd_config.title("ventana de configuracion")
+        self.wd_config.title("Configuracion")
         self.wd_config.geometry("%dx%d+%d+%d" % (300, 350, self.winfo_x()-0, self.winfo_y()-50))
         self.wd_config.resizable(False, False)
         self.wd_config.configure(background='white')
@@ -421,18 +414,27 @@ class Gui(tk.Tk):
         self.config_color()
 
     def config_color(self):
-        if mc.in_window == 'config':
+        if mc.in_window == 'config' and mc.gui_alive:
             for i in range(len(self.wd_config.idx)):
                 if self.wd_config.idx[i].cget('background') == 'red':
                     self.wd_config.idx[i].configure(bg='white')
-                    self.wd_config.idx[(
-                        i+1) % len(self.wd_config.idx)].configure(bg='red')
+                    self.wd_config.idx[(i+1) % len(self.wd_config.idx)].configure(bg='red')
                     break
             self.after(mc.velocidad_barrido, self.config_color)
 
+    def config_on_closing(self):
+        print(f'{__name__}: config_on_closing()')
+        mc.in_window = 'main'
+        self.wd_config.destroy()
+        self.deiconify()  # muestra nuevamente mainwindow
+
     def open_use(self):
+        print(f'{__name__}: open_use()')
         self.wd_use = tk.Toplevel(self)
-        self.wd_use.title("Controlador del mouse")
+        if mc.use_advanced_mod:
+            self.wd_use.title("Modo avanzado")
+        else:
+            self.wd_use.title("Modo simple")
         self.wd_use.geometry("%dx%d+%d+%d" % (370, 310, self.winfo_x()-40, self.winfo_y()-40))
         self.wd_use.maxsize(370, 310)
         self.wd_use.minsize(370, 310)
@@ -451,13 +453,8 @@ class Gui(tk.Tk):
 
         self.wd_use.attributes("-topmost", True)
 
-    def start_gui(self):
-        mc.gui_alive = True  # ver si no conviene ponerlo en el constructor de wd_use por flag en mouse
+    def use_on_closing(self):
+        print(f'{__name__}: use_on_closing()')
         mc.in_window = 'main'
-        self.mainloop()
-
-    def finish_gui(self):
-        mc.gui_alive = False
-        # damos tiempo a que muera "mouse" que usa la gui
-        sleep(0.5)
-        self.destroy()
+        self.wd_use.destroy()
+        self.deiconify()  # muestra nuevamente mainwindow

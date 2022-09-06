@@ -2,10 +2,9 @@ import socket as sk
 import json as js
 from types import NoneType
 import myConfig as mc
-from time import sleep
 
 def check(sk_rcv) -> str:
-    print(f'{__name__}: recepcion socket: {sk_rcv}')
+    # print(f'{__name__}: recepcion socket: {sk_rcv}')
     if sk_rcv[0] == '#$' and sk_rcv[2] == '$#':
         res = int(sk_rcv[1])
     else:
@@ -14,6 +13,8 @@ def check(sk_rcv) -> str:
     return res
 
 def create_server(x):
+    mc.socket_alive = True
+    print(f'{__name__}: INICIO server')
     # crear socket INET (IPV4) STREAM (TCP)
     server_socket = sk.socket(sk.AF_INET, sk.SOCK_STREAM)
     try:
@@ -22,41 +23,36 @@ def create_server(x):
         # prender servidor, ponerlo a la escucha
         server_socket.listen(5)
 
+        print(f'{__name__}: esperando conexion')
+        (client_socket, address) = server_socket.accept()
+        print(f'{__name__}: conectado a {client_socket}, {address}')
         while mc.main_alive:
-            print('ENTRO AL LOOP')
-    #        print(f'{__name__}: esperando conexion')
-            (client_socket, address) = server_socket.accept()
-    #        print(f'{__name__}: socket conectado: escuchando')
+            # print(f'{__name__}: escuchando')
             sk_msg = js.loads(client_socket.recv(4096).decode('UTF-8'))
             op = check(sk_msg)
             if op != -1:
                 if op == 1:
                     mc.tecla = True
+                    print(f'{__name__}: recepcion socket: #$,{1},#$')
                 elif op == 0:
                     mc.tecla = False
                 if op == 2:
-                    print('ES 2')
                     if type(x.wd_use) != NoneType:
-                        print('Destruyendo use')
                         x.use_on_closing()
-                        print('use destuida')
                     if type(x.wd_config) != NoneType:
-                        print('Desruyendo config')
                         x.config_on_closing()
-                    x.finish_gui()
+                    print(f'{__name__}: cerrando gui')
+                    # este flag hace que en la funcion color() de la gui, se destruya sola
+                    mc.gui_alive = False
+                    while mc.mouse_alive:
+                        pass
+                    print(f'{__name__}: gui cerrada')
+                    break
     except OSError:
         print(f'{__name__}: ERROR: Servidor tomado')
     except Exception as err:
-        print(f'ERROR: Problema con el servidor: {err}')
-    
-    # en este caso, se debe matar la interfaz grafica, ya que se recibio comando de finalizacion
-    # El problema es que el thread "mv_mouse" ejecutado desde el main, tiene relacion a la interfaz
-    # grafica, y por como funciona tkinter, debe morir si o si antes de que lo haga la GUI. Por lo tanto
-    # desde aca mato al mouse mediante el flag ".gui_alive" del cual depende el mouse, y luego procedo a finalizar la GUI
-    mc.gui_alive = False
-    # doy tiempo a que muera el thread "mv_mouse" y que mueran las toplevel use y config.
-    sleep(4)
+        print(f'{__name__}: ERROR: Problema con el servidor: {err}')
 
-    x.destroy()
     server_socket.close()
-    print(f'{__name__}: FIN SERVER')
+    print(f'{__name__}: fin server')
+    mc.socket_alive = False

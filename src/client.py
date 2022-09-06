@@ -5,19 +5,11 @@ import myConfig as mc
 
 
 def sk_send(msg: list):
-    # crear socket INET (IPV4) STREAM (TCP)
-    client_socket = sk.socket(sk.AF_INET, sk.SOCK_STREAM)
     try:
-        # vincular socket a host publico y puerto conocido
-        client_socket.connect((sk.gethostname(), mc.port))
-        # envio senal y cierro el socket
         client_socket.send(js.dumps(msg).encode('UTF-8'))
         print(f'{__name__}: envio socket: {js.dumps(msg)}\n')
-        client_socket.shutdown(0)
-    except:
-        print(f'{__name__}: no se pudo conectar al servidor')
-
-    client_socket.close()
+    except Exception:
+        print(f'{__name__}: Error enviando mensaje: {Exception}')
 
 
 def send_no_key():
@@ -42,6 +34,17 @@ def send_exit():
 # - tab: tabula, o va desplazando selector en las ventanas
 if __name__ == '__main__':
     print(f'{__name__}: iniciado')
+
+    # crear socket INET (IPV4) STREAM (TCP)
+    client_socket = sk.socket(sk.AF_INET, sk.SOCK_STREAM)
+    print(f'{__name__}: socket creado')
+    try:
+        # vincular socket a host publico y puerto conocido
+        client_socket.connect((sk.gethostname(), mc.port))
+        print(f'{__name__}: socket conectado a {sk.gethostname()}')
+    except:
+        print(f'{__name__}: no se pudo conectar al servidor')
+
     while True:
         if mc.myTecla != mc.no_key_cod and not kb.is_pressed(mc.exit_key) and not kb.is_pressed(mc.action_key):
             send_no_key()
@@ -50,3 +53,6 @@ if __name__ == '__main__':
         elif kb.is_pressed(mc.exit_key) and mc.myTecla != 2:
             send_exit()
             break
+    client_socket.shutdown(0)
+    client_socket.close()
+    print(f'{__name__}: FIN')
