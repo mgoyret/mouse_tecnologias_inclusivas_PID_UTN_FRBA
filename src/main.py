@@ -8,9 +8,9 @@ import myConfig as mc
 if __name__ == "__main__":
 
 # comento por comodidad al probar
-#    td_bienvenida = td.Thread(target=ad.tss, args=['Hola! bienvenido al mouse controlado'])
-#    td_bienvenida.daemon = True
-#    td_bienvenida.start()
+    td_bienvenida = td.Thread(target=ad.tss, args=['Hola! bienvenido al mouse controlado'])
+    td_bienvenida.daemon = True
+    td_bienvenida.start()
 
     root = Gui()
     # las imagenes son lo que mas tardan en cargar. Las cargo antes de arrancar los threads, asi lo hace mucho mas rapido,
@@ -20,7 +20,8 @@ if __name__ == "__main__":
     print(f'{__name__}: fin carga fotos')
 
     print(f'{__name__}: iniciando thread socket')
-    td_socket = td.Thread(target=sv.create_server, args=[root])
+    serverObject = sv.Server()
+    td_socket = td.Thread(target=serverObject.create_server, args=[root])
     td_socket.daemon = True
     td_socket.start()
     print(f'{__name__}: thread socket iniciado')
@@ -37,12 +38,12 @@ if __name__ == "__main__":
     root.start_gui()
     print(f'{__name__}: interfaz cerrada')
 
-# comento por comodidad al probar
-#    ad.tss('Hasta luego!')
+    # comento por comodidad al probar
+    ad.tss('Hasta luego!')
 
     mc.main_alive = False
     # margen de tiempo para que mueran threads
     print(f'{__name__}: esperando muerte de threads')
     while mc.mouse_alive or mc.socket_alive:
-        pass
+        if mc.socket_alive: serverObject.close_server()
     print(f'{__name__}: THREADS:\nsocket: {td_socket}\nmouse: {td_mouse}')
