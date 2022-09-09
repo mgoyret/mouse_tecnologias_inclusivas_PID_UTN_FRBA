@@ -11,7 +11,7 @@ class Window_use(tk.Frame):
 
     def __init__(self, parent):
         tk.Frame.__init__(self, parent, bg='white')
-        self.coords_clicks_Labels = tk.LabelFrame(self)  # , text='Direcciones'
+        self.coords_clicks_Labels = tk.LabelFrame(self)
         self.coords_clicks_Labels.grid(row=0, column=0)
         # mod=avanzado --> mod=0
         if mc.use_advanced_mod:
@@ -80,11 +80,11 @@ class Window_use(tk.Frame):
         self.accionesLabels.grid(row=1, column=0)
 
         self.img_pausa = mc.img_pausa
-        self.lbl_pausa = tk.Label(self.accionesLabels, image=self.img_pausa['black'], text='pausa', borderwidth=0, highlightthickness=0)
+        self.lbl_pausa = tk.Label(self.accionesLabels, image=self.img_pausa['black'], borderwidth=0, highlightthickness=0)
         self.lbl_pausa.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
 
         self.img_salir = mc.img_salir
-        self.lbl_salir = tk.Label(self.accionesLabels, image=self.img_salir['black'], text='salir', borderwidth=0, highlightthickness=0)
+        self.lbl_salir = tk.Label(self.accionesLabels, image=self.img_salir['black'], borderwidth=0, highlightthickness=0)
         self.lbl_salir.grid(row=1, column=0, padx=2, pady=2, sticky='nesw')
 
         self.idx = {
@@ -241,7 +241,7 @@ class Window_config(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, parent, bg='white')
         # velocidad puntero
-        self.velocidad_puntero = tk.LabelFrame(self, text='', background='white')
+        self.velocidad_puntero = tk.LabelFrame(self, background='white')
         self.velocidad_puntero.pack(padx=10, pady=(20, 10), expand=True, fill='both')
         # label
         # el  valor dividido por 5 es para que visualmente hayan 4 velocidades
@@ -265,7 +265,7 @@ class Window_config(tk.Frame):
         self.btn_20.grid(row=1, column=1, padx=2, pady=2, sticky='nesw')
 
         # velocidad barrido
-        self.velocidad_barrido = tk.LabelFrame(self, text='', background='white')
+        self.velocidad_barrido = tk.LabelFrame(self, background='white')
         self.velocidad_barrido.pack(padx=10, pady=(10, 5), expand=True, fill='both')
         # label
         self.label_velocidad_barrido = tk.Label(self.velocidad_barrido, text=f'Velocidad barrido [ms]: {mc.velocidad_barrido}', background='white')
@@ -322,6 +322,7 @@ class Gui(tk.Tk):
         self.resizable(False, False)
 #        self.configure(background='#F2B33D')
         self.configure(background='white')
+        self.overrideredirect(2) #sin botones minimizar, etc
         self.protocol("WM_DELETE_WINDOW", self.finish_gui)
         self.eval('tk::PlaceWindow . center')
         # ICONO
@@ -342,6 +343,10 @@ class Gui(tk.Tk):
         self.lbl_settings = tk.Label(self.frame_settings, image=self.img_settings['black'])
         self.lbl_settings.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
 
+        self.img_salir = {"black": ImageTk.PhotoImage(Image.open("../recursos/salir_b.png").resize(mc.size_settings)), "red": ImageTk.PhotoImage(Image.open("../recursos/salir_r.png").resize(mc.size_settings))}#mc.img_salir
+        self.lbl_salir = tk.Label(self.frame_settings, image=self.img_salir['black'], borderwidth=0, highlightthickness=0)
+        self.lbl_salir.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
+
         self.frame_modos = tk.LabelFrame(self.frame_general, background='white')
         self.frame_modos.grid(row=1, column=0)
 
@@ -355,22 +360,12 @@ class Gui(tk.Tk):
 
         self.idx = {
             "settings": "b",
+            "salir":    "b",
             "simple":   "b",
             'avanzado': 'r'
         }
 
         self.color()
-
-    def start_gui(self):
-        mc.in_window = 'main'
-        self.mainloop()
-
-    def finish_gui(self):
-        mc.gui_alive = False
-        # damos tiempo a que muera "mouse" que usa la gui. El thread debe morir antes que la gui
-        while mc.mouse_alive:
-            pass
-        self.destroy()
 
     # esta funcion miembro analiza cuando un label tiene color rosa
     # y lo pone el azul, para luego poner el siguiente en rosa
@@ -381,6 +376,13 @@ class Gui(tk.Tk):
                     if i == 'settings':
                         self.lbl_settings = tk.Label(self.frame_settings, image=self.img_settings['black'])
                         self.lbl_settings.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
+                        self.lbl_salir = tk.Label(self.frame_settings, image=self.img_salir['red'], borderwidth=0, highlightthickness=0)
+                        self.lbl_salir.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
+                        self.idx['salir'] = 'r'
+
+                    if i == 'salir':
+                        self.lbl_salir = tk.Label(self.frame_settings, image=self.img_salir['black'], borderwidth=0, highlightthickness=0)
+                        self.lbl_salir.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
                         self.lbl_simple = tk.Label(self.frame_modos, image=self.img_simple["red"])
                         self.lbl_simple.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
                         self.idx['simple'] = 'r'
@@ -408,13 +410,24 @@ class Gui(tk.Tk):
         # se encarga de destruir
         if not mc.gui_alive: self.destroy()
 
+    def start_gui(self):
+        mc.in_window = 'main'
+        self.mainloop()
+
+    def finish_gui(self):
+        mc.gui_alive = False
+        self.quit()
+
     def open_config(self):
         print(f'{__name__}: open_config()')
         self.wd_config = tk.Toplevel(self)
         self.wd_config.title("Configuracion")
         self.wd_config.geometry("%dx%d+%d+%d" % (350, 300, self.winfo_x()-0, self.winfo_y()-50))
+        self.wd_config.maxsize(350, 300)
+        self.wd_config.minsize(350, 300)
         self.wd_config.resizable(False, False)
         self.wd_config.configure(background='white')
+        self.wd_config.overrideredirect(1) #sin botones minimizar, etc
         # ICONO
         # self.img_icon = ImageTk.PhotoImage(Image.open("../recursos/logo.jpg"))
         self.wd_config.tk.call('wm', 'iconphoto', self.wd_config._w, self.img_icon)
@@ -443,8 +456,9 @@ class Gui(tk.Tk):
         self.wd_use.geometry("%dx%d+%d+%d" % (370, 310, self.winfo_x()-40, self.winfo_y()-40))
         self.wd_use.maxsize(370, 310)
         self.wd_use.minsize(370, 310)
-        # wd_use.resizable(False, False)
+        self.wd_use.resizable(False, False)
         self.wd_use.configure(background='white')
+        self.wd_use.overrideredirect(1) #sin botones minimizar, etc
         # ICONO
         # self.img_icon = ImageTk.PhotoImage(Image.open("../recursos/logo.jpg"))
         self.wd_use.tk.call('wm', 'iconphoto', self.wd_use._w, self.img_icon)

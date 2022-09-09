@@ -3,6 +3,7 @@ import math as mt
 from time import sleep
 import myConfig as mc
 import gui
+import threading as td
 
 # ag tiene una funcion que tira un error si ag mueve el mouse a una
 # esquina del monitor, la desactivo. Verificar que el main incluya todo "mouse.py"
@@ -42,12 +43,15 @@ class Mouse():
 
         # "mc.tecla = False" es porque por ejemplo, cerraba una ventana con exit, pero
         # al volver al main, si sigo por unos isntantes presionando el boton, se volvia a abrir
-        while mc.gui_alive:
+        while mc.gui_alive and mc.mouse_alive:
             if mc.tecla:
                 if mc.in_window == 'main':
                     mc.tecla = False
                     if x.idx['settings'] == 'r':
                         x.open_config()
+                    elif x.idx['salir'] == 'r':
+                        x.finish_gui()
+
                     elif x.idx['simple'] == 'r':
                         mc.use_advanced_mod = 0
                         x.open_use()
@@ -127,8 +131,7 @@ class Mouse():
                             mc.tecla = False
                             x.use_on_closing()
                         mc.color_flag = True
-
-                        # creo que este sleep es para no exigir tanto al procesador, pero relentiza el movimiento del putnero
-                        # sleep(0.05)
+                        # este sleep es para no exigir tanto al procesador, pero relentiza el movimiento del putnero
+                        sleep(0.05)
         mc.mouse_alive = False
         print(f'{__name__}: FIN Mouse.mouse()')

@@ -44,7 +44,12 @@ if __name__ == "__main__":
     mc.main_alive = False
     # margen de tiempo para que mueran threads
     print(f'{__name__}: esperando muerte de threads')
-    while mc.mouse_alive or mc.socket_alive:
-        if mc.socket_alive:
-            serverObject.close_server()
+    if mc.socket_alive:
+        serverObject.close_server()
+        td_socket.join()
+    print(f'{__name__}: murio el socket')
+    if mc.mouse_alive:
+        td_mouse.join()
+    print(f'{__name__}: murio el mouse')
+
     print(f'{__name__}: THREADS:\nsocket: {td_socket}\nmouse: {td_mouse}')
