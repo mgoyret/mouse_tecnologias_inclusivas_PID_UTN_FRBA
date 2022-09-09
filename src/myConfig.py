@@ -35,6 +35,7 @@ exit_code = 2
 # 0 = simple
 # 1 = avansado
 use_advanced_mod = 1
+modo_hide = 0
 
 # tamanos imagenes
 size_diagonal = (67, 67)

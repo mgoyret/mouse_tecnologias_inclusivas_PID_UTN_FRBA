@@ -94,9 +94,9 @@ class Mouse():
                 elif mc.in_window == 'use':
                     if x.wd_use.wd.idx['pausa'] == 'r':
                         mc.tecla = False  # para que no entre en este if por el tiempo que tarda en soltar la tecla
-                        if mc.color_flag:
+                        if mc.color_flag and mc.modo_hide:
                             x.wd_use.withdraw()
-                        else:
+                        elif mc.modo_hide:
                             x.wd_use.deiconify()
                         mc.color_flag = not mc.color_flag
                     else:
