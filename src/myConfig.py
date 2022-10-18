@@ -3,7 +3,7 @@ from PIL import ImageTk, Image
 tecla = bool(False)  # simula entrada activo alto
 myTecla = int(0)  # esto no iria, de esto se encarga el hw casco
 
-# al presionar la tecla de exit, el cliente envia por socket, y el
+# al presionar la tecla de exit, el emuladore envia por socket, y el
 # modulo server recibe la senal, pone en False este flag por lo que el mouse muere
 # y luego el server mata la GUI con su handler.
 main_alive = True
@@ -25,8 +25,8 @@ velocidad_barrido = 1000  # ms
 velocidad_puntero = 20
 
 # teclado - envio de senales
-action_key = 'esc'
-exit_key = 'shift'
+action_key = 'f7'
+exit_key = 'esc'
 no_key_cod = 0
 action_code = 1
 exit_code = 2
@@ -35,7 +35,25 @@ exit_code = 2
 # 0 = simple
 # 1 = avansado
 use_advanced_mod = 1
-modo_hide = 0
+modo_esconder = 0
+
+# tamano main window
+wd_with_main = 300
+wd_hight_main = 290
+# tamano config
+wd_with_config = 350
+wd_hight_config = 480
+# tamano use
+wd_with_use = 370
+wd_hight_use = 310
+
+#background = '#F2B33D'
+background = '#eeeee4'
+# posicion window
+## 0 = top right
+## 1 = center
+## 2 = top down
+wd_position = 1
 
 # tamanos imagenes
 size_diagonal = (67, 67)

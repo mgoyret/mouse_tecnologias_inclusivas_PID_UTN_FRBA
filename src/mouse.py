@@ -63,29 +63,44 @@ class Mouse():
                     mc.tecla = False
                     # los valores divididos por 5 es para que visualmente hayan 4 velocidades
                     if x.wd_config.wd.btn_5.cget('background') == 'red':
-                        x.wd_config.wd.label_velocidad_puntero['text'] = f'Velocidad puntero: {int(5/5)}'
+                        x.wd_config.wd.label_velocidad_puntero['text'] = f'Velocidad del puntero: {int(5/5)}'
                         mc.velocidad_puntero = 5
                     elif x.wd_config.wd.btn_10.cget('background') == 'red':
-                        x.wd_config.wd.label_velocidad_puntero['text'] = f'Velocidad puntero: {int(10/5)}'
+                        x.wd_config.wd.label_velocidad_puntero['text'] = f'Velocidad del puntero: {int(10/5)}'
                         mc.velocidad_puntero = 10
                     elif x.wd_config.wd.btn_15.cget('background') == 'red':
-                        x.wd_config.wd.label_velocidad_puntero['text'] = f'Velocidad puntero: {int(15/5)}'
+                        x.wd_config.wd.label_velocidad_puntero['text'] = f'Velocidad del puntero: {int(15/5)}'
                         mc.velocidad_puntero = 15
                     elif x.wd_config.wd.btn_20.cget('background') == 'red':
-                        x.wd_config.wd.label_velocidad_puntero['text'] = f'Velocidad puntero: {int(20/5)}'
+                        x.wd_config.wd.label_velocidad_puntero['text'] = f'Velocidad del puntero: {int(20/5)}'
                         mc.velocidad_puntero = 20
                     elif x.wd_config.wd.btn_750.cget('background') == 'red':
-                        x.wd_config.wd.label_velocidad_barrido['text'] = f'Velocidad barrido [ms]: {750}'
+                        x.wd_config.wd.label_velocidad_barrido['text'] = 'Velocidad del barrido [ms]:  750'
                         mc.velocidad_barrido = 750
                     elif x.wd_config.wd.btn_1000.cget('background') == 'red':
-                        x.wd_config.wd.label_velocidad_barrido['text'] = f'Velocidad barrido [ms]: {1000}'
+                        x.wd_config.wd.label_velocidad_barrido['text'] = 'Velocidad del barrido [ms]: 1000'
                         mc.velocidad_barrido = 1000
                     elif x.wd_config.wd.btn_1500.cget('background') == 'red':
-                        x.wd_config.wd.label_velocidad_barrido['text'] = f'Velocidad barrido [ms]: {1500}'
+                        x.wd_config.wd.label_velocidad_barrido['text'] = 'Velocidad del barrido [ms]: 1500'
                         mc.velocidad_barrido = 1500
                     elif x.wd_config.wd.btn_2000.cget('background') == 'red':
-                        x.wd_config.wd.label_velocidad_barrido['text'] = f'Velocidad barrido [ms]: {2000}'
+                        x.wd_config.wd.label_velocidad_barrido['text'] = 'Velocidad del barrido [ms]: 2000'
                         mc.velocidad_barrido = 2000
+                    elif x.wd_config.wd.btn_mostrar.cget('background') == 'red':
+                        mc.modo_esconder = 0
+                    elif x.wd_config.wd.btn_esconder.cget('background') == 'red':
+                        mc.modo_esconder = 1
+
+                    elif x.wd_config.wd.btn_tr.cget('background') == 'red':
+                        mc.wd_position = 0
+#                        x.set_position_main()
+                    elif x.wd_config.wd.btn_c.cget('background') == 'red':
+                        mc.wd_position = 1
+#                        x.set_position_main()
+                    elif x.wd_config.wd.btn_td.cget('background') == 'red':
+                        mc.wd_position = 2
+#                        x.set_position_main()
+
                     elif x.wd_config.wd.btn_aplicar.cget('background') == 'red':
                         self.actualizar_velocidad()
                         x.config_on_closing()
@@ -94,9 +109,9 @@ class Mouse():
                 elif mc.in_window == 'use':
                     if x.wd_use.wd.idx['pausa'] == 'r':
                         mc.tecla = False  # para que no entre en este if por el tiempo que tarda en soltar la tecla
-                        if mc.color_flag and mc.modo_hide:
+                        if mc.color_flag and mc.modo_esconder:
                             x.wd_use.withdraw()
-                        elif mc.modo_hide:
+                        elif mc.modo_esconder:
                             x.wd_use.deiconify()
                         mc.color_flag = not mc.color_flag
                     else:
@@ -134,4 +149,4 @@ class Mouse():
                         # este sleep es para no exigir tanto al procesador, pero relentiza el movimiento del putnero
                         sleep(0.05)
         mc.mouse_alive = False
-        print(f'{__name__}: FIN Mouse.mouse()')
+        print(f'{__name__}: FIN mouse')

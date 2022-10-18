@@ -1,3 +1,4 @@
+from pydoc import cli
 import threading as td
 import server as sv
 import audio as ad
@@ -8,9 +9,9 @@ import myConfig as mc
 if __name__ == "__main__":
 
 # comento por comodidad al probar
-#    td_bienvenida = td.Thread(target=ad.tss, args=['Hola! bienvenido al mouse controlado'])
-#    td_bienvenida.daemon = True
-#    td_bienvenida.start()
+    td_bienvenida = td.Thread(target=ad.tss, args=['Hola! bienvenido al mouse controlado'])
+    td_bienvenida.daemon = True
+    td_bienvenida.start()
 
     root = Gui()
     # las imagenes son lo que mas tardan en cargar. Las cargo antes de arrancar los threads, asi lo hace mucho mas rapido,
@@ -26,12 +27,12 @@ if __name__ == "__main__":
     td_socket.start()
     print(f'{__name__}: thread socket iniciado')
 
-    print(f'{__name__}: iniciando socket mouse')
+    print(f'{__name__}: iniciando thread mouse')
     mouseObject = ms.Mouse()
     td_mouse = td.Thread(target=mouseObject.mouse, args=[root])
     td_mouse.daemon = True
     td_mouse.start()
-    print(f'{__name__}: socket mouse iniciado')
+    print(f'{__name__}: thread mouse iniciado')
 
     print(f'{__name__}: THREADS:\nsocket: {td_socket}\nmouse: {td_mouse}\n')
     print(f'{__name__}: abriendo interfaz')
@@ -39,7 +40,7 @@ if __name__ == "__main__":
     print(f'{__name__}: interfaz cerrada')
 
     # comento por comodidad al probar
-#    ad.tss('Hasta luego!')
+    ad.tss('Hasta luego!')
 
     mc.main_alive = False
     # margen de tiempo para que mueran threads

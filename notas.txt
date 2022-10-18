@@ -1,13 +1,20 @@
 URGENTE
-- mejorar interfaz en general, visualmente
-- Emprolijar en cuanto a chequeo de errores
-- manual de usuario tecnico y diagrama de clases
+- temrinar lo de la posicion, barrido color
 
-- cuando cierran la ventana con la cruz, se cierra todo pero el socket server no es
-        finalizado correctamente. Igual creo que si, se cierra solo
+POSIBLES MEJORAS
+- en configuraciones, con botones desplazar la ventana para elegir su posicion
+
+
+Hoy pensé: el archivo de configuración podría ser una clase: configurable con miembros y métodos.
+        Tendria que adaptar todo el código. Si aporta, lo hago, para más homogeneidad en el método de programar.
+
+- ventana de configuración de puerto, conexión, no hice. Considero que la aplicación esta desarrollada para usar con
+        un puerto no configurable por el usuario. ¿está bien?
 
 SECUNDARIO
-- hacer mas fluido el movimiento del mouse
+- hacer más fluido el movimiento del mouse. Investigué, pero no lo logré. La función ya es atómica,
+        es un while(1) que solo mueve el mouse, pero igualmente no es 100% fluido el movimiento.
+        Si tengo tiempo investigo alguna nueva biblioteca para probar.
 
 RESUELTO
 - modos simple (borrar diagonales) y avanzado (todo)
@@ -19,10 +26,19 @@ RESUELTO
 - cambiar exit por salir
 - opcion pausar barrido para que no moleste visualmente
 - logos de engranajes y cosas
+- cuando cierran la ventana con la cruz, se cierra todo pero el socket server no es
+        finalizado correctamente. Igual creo que si, se cierra solo
+ - Sacar la barra de control
+ - Emprolijar el cuadrado en mainwindow
+
 
 CREO QUE YA ESTA
-- verificar cuando abro configuracion y no cierra. Es porque mantengo apretado el boton, y cierra pero abre al toque la siguiente ventana.
-        Hacer que se detecten los flancos, no el momento mientras se aprieta. Salvo para el barrido de las flechas.
+- verificar cuando abro configuración y no cierra. Es porque mantengo apretado el botón, y cierra pero abre al
+        toque la siguiente ventana. Hacer que se detecten los flancos, no el momento mientras se aprieta.
+        Salvo para el barrido de las flechas.
+- mejorar interfaz en general, visualmente.
+- Emprolijar en cuanto a chequeo de errores.
+- Manual de usuario técnico y diagrama de clases.
 
 
 # partial por defecto manda self como argumento. Guardar este dato en algun lado

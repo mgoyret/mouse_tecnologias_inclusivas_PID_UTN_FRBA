@@ -10,7 +10,7 @@ class Window_use(tk.Frame):
     # idx = list()
 
     def __init__(self, parent):
-        tk.Frame.__init__(self, parent, bg='white')
+        tk.Frame.__init__(self, parent, background=mc.background)
         self.coords_clicks_Labels = tk.LabelFrame(self)
         self.coords_clicks_Labels.grid(row=0, column=0)
         # mod=avanzado --> mod=0
@@ -239,17 +239,17 @@ class Window_use(tk.Frame):
 
 class Window_config(tk.Frame):
     def __init__(self, parent):
-        tk.Frame.__init__(self, parent, bg='white')
+        tk.Frame.__init__(self, parent, background=mc.background)
         # velocidad puntero
-        self.velocidad_puntero = tk.LabelFrame(self, background='white')
-        self.velocidad_puntero.pack(padx=10, pady=(20, 10), expand=True, fill='both')
-        # label
+        self.frame_velocidad_puntero = tk.LabelFrame(self, background=mc.background)
+        self.frame_velocidad_puntero.pack(padx=10, pady=(20, 10), expand=True, fill='both')
+        ## label
         # el  valor dividido por 5 es para que visualmente hayan 4 velocidades
-        self.label_velocidad_puntero = tk.Label(self.velocidad_puntero, text=f'Velocidad puntero: {int(mc.velocidad_puntero/5)}', background='white')
+        self.label_velocidad_puntero = tk.Label(self.frame_velocidad_puntero, text=f'Velocidad del puntero: {int(mc.velocidad_puntero/5)}', background=mc.background)
         self.label_velocidad_puntero.pack(side=tk.LEFT, padx=5, pady=5)
 
-        # valores
-        self.frame_valores_puntero = tk.LabelFrame(self.velocidad_puntero, background='white', borderwidth=0, highlightthickness=0)
+        ## valores
+        self.frame_valores_puntero = tk.LabelFrame(self.frame_velocidad_puntero, background=mc.background, borderwidth=0, highlightthickness=0)
         self.frame_valores_puntero.pack(side=tk.RIGHT, padx=10, pady=5)
 
         self.btn_5 = tk.Button(self.frame_valores_puntero, text='1', background='white')
@@ -265,14 +265,14 @@ class Window_config(tk.Frame):
         self.btn_20.grid(row=1, column=1, padx=2, pady=2, sticky='nesw')
 
         # velocidad barrido
-        self.velocidad_barrido = tk.LabelFrame(self, background='white')
-        self.velocidad_barrido.pack(padx=10, pady=(10, 5), expand=True, fill='both')
-        # label
-        self.label_velocidad_barrido = tk.Label(self.velocidad_barrido, text=f'Velocidad barrido [ms]: {mc.velocidad_barrido}', background='white')
+        self.frame_velocidad_barrido = tk.LabelFrame(self, background=mc.background)
+        self.frame_velocidad_barrido.pack(padx=10, pady=(10, 5), expand=True, fill='both')
+        ## label
+        self.label_velocidad_barrido = tk.Label(self.frame_velocidad_barrido, text=f'Velocidad del barrido [ms]: {mc.velocidad_barrido}', background=mc.background)
         self.label_velocidad_barrido.pack(side=tk.LEFT, padx=5, pady=5)
 
-        # valores
-        self.frame_valores_barrido = tk.LabelFrame(self.velocidad_barrido, background='white', borderwidth=0, highlightthickness=0)
+        ## valores
+        self.frame_valores_barrido = tk.LabelFrame(self.frame_velocidad_barrido, background=mc.background, borderwidth=0, highlightthickness=0)
         self.frame_valores_barrido.pack(side=tk.RIGHT, padx=10, pady=5)
 
         self.btn_750 = tk.Button(self.frame_valores_barrido, text='750', background='white')
@@ -287,14 +287,54 @@ class Window_config(tk.Frame):
         self.btn_2000 = tk.Button(self.frame_valores_barrido, text='2000', background='white')
         self.btn_2000.grid(row=1, column=1, padx=2, pady=2, sticky='nesw')
 
-        # buttons
-        self.buttons = tk.LabelFrame(self, background='white', borderwidth=0, highlightthickness=0)
-        self.buttons.pack(padx=50, pady=(5, 10), expand=True, fill='y')
-        # ok button
-        self.btn_aplicar = tk.Button(self.buttons, text='aplicar', width=10, height=2, background='red')
-        self.btn_aplicar.pack(side=tk.RIGHT, padx=(10, 5), pady=0)
+
+        # modo pausa
+        self.frame_pausa = tk.LabelFrame(self, background=mc.background)
+        self.frame_pausa.pack(padx=10, pady=(10, 5), expand=True, fill='both')
+        ## label
+        self.label_pausa = tk.Label(self.frame_pausa, text=f'Al pausar ejecución:', background=mc.background)
+        self.label_pausa.pack(side=tk.LEFT, padx=5, pady=5)
+
+        ## valores
+        self.frame_opciones_pausa = tk.LabelFrame(self.frame_pausa, background=mc.background, borderwidth=0, highlightthickness=0)
+        self.frame_opciones_pausa.pack(side=tk.RIGHT, padx=10, pady=5)
+
+        self.btn_mostrar = tk.Button(self.frame_opciones_pausa, text='mostrar', background='white')
+        self.btn_mostrar.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
+
+        self.btn_esconder = tk.Button(self.frame_opciones_pausa, text='esconder', background='white')
+        self.btn_esconder.grid(row=0, column=2, padx=2, pady=2, sticky='nesw')
+
+##########################################################################################
+        # posicion ventana
+        self.frame_posicion = tk.LabelFrame(self, background=mc.background)
+        self.frame_posicion.pack(padx=10, pady=(10, 5), expand=True, fill='both')
+        ## label
+        self.label_posicion = tk.Label(self.frame_posicion, text=f'Posicion de la ventana:', background=mc.background)
+        self.label_posicion.pack(side=tk.LEFT, padx=5, pady=5)
+
+        ## valores
+        self.frame_opciones_posicion = tk.LabelFrame(self.frame_posicion, background=mc.background, borderwidth=0, highlightthickness=0)
+        self.frame_opciones_posicion.pack(side=tk.RIGHT, padx=10, pady=5)
+
+        self.btn_tr = tk.Button(self.frame_opciones_posicion, text='superior derecha', background='white')
+        self.btn_tr.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
+
+        self.btn_c = tk.Button(self.frame_opciones_posicion, text='central', background='white')
+        self.btn_c.grid(row=1, column=0, padx=2, pady=2, sticky='nesw')
+
+        self.btn_td = tk.Button(self.frame_opciones_posicion, text='inferior derecha', background='white')
+        self.btn_td.grid(row=2, column=0, padx=2, pady=2, sticky='nesw')
+
+##########################################################################################
+        # aplicar
+        self.frame_aplicar = tk.LabelFrame(self, background=mc.background, borderwidth=0, highlightthickness=0)
+        self.frame_aplicar.pack(padx=50, pady=(5, 10), expand=True, fill='y')
+        ## ok button
+        self.btn_aplicar = tk.Button(self.frame_aplicar, text='aplicar', width=10, height=2, background='red')
+        self.btn_aplicar.pack(side=tk.RIGHT, padx=(10, 5), pady=10)
         
-        self.idx = [self.btn_5, self.btn_10, self.btn_15, self.btn_20, self.btn_750, self.btn_1000, self.btn_1500, self.btn_2000, self.btn_aplicar]  # self.wd_config.btn_cancel self.wd_config.btn_aplicar
+        self.idx = [self.btn_5, self.btn_10, self.btn_15, self.btn_20, self.btn_750, self.btn_1000, self.btn_1500, self.btn_2000, self.btn_mostrar, self.btn_esconder, self.btn_tr, self.btn_c, self.btn_td, self.btn_aplicar]
         self.config_color()
 
     def config_color(self):
@@ -318,36 +358,35 @@ class Gui(tk.Tk):
         print(f'{__name__}: INICIO Gui()')
         tk.Tk.__init__(self)
         self.title("Mouse4All")
-        self.geometry("300x250")
+        self.geometry(f"{mc.wd_with_main}x{mc.wd_hight_main}")
         self.resizable(False, False)
 #        self.configure(background='#F2B33D')
-        self.configure(background='white')
+        self.configure(background=mc.background)
         self.overrideredirect(2) #sin botones minimizar, etc
         self.protocol("WM_DELETE_WINDOW", self.finish_gui)
         self.eval('tk::PlaceWindow . center')
         # ICONO
-        self.img_icon = ImageTk.PhotoImage(Image.open("../recursos/logo.jpg"))
-        self.tk.call('wm', 'iconphoto', self._w, self.img_icon)
+        # self.img_icon = ImageTk.PhotoImage(Image.open("../recursos/logo.jpg"))
+        # self.tk.call('wm', 'iconphoto', self._w, self.img_icon)
 
-        # ver si no es mejor poner esto en main, con root.
-        self.attributes("-topmost", True)
+        self.attributes("-topmost", True) # ventana siempre al frente
         mc.in_window = 'main'
 
-        self.frame_general = tk.LabelFrame(self, background='white', borderwidth=0, highlightthickness=0)
+        self.frame_general = tk.LabelFrame(self, background=mc.background, borderwidth=0, highlightthickness=0)
         self.frame_general.pack(padx=10, pady=10)
 
-        self.frame_settings = tk.LabelFrame(self.frame_general)
+        self.frame_settings = tk.LabelFrame(self.frame_general, background=mc.background, text='Opciones')
         self.frame_settings.grid(row=0, column=0)
 
         self.img_settings = {"black": ImageTk.PhotoImage(Image.open("../recursos/settings_b.png").resize(mc.size_settings)), "red": ImageTk.PhotoImage(Image.open("../recursos/settings_r.png").resize(mc.size_settings))}
         self.lbl_settings = tk.Label(self.frame_settings, image=self.img_settings['black'])
-        self.lbl_settings.grid(row=0, column=0, padx=2, pady=2, sticky='nesw')
+        self.lbl_settings.grid(row=0, column=0, padx=(18, 8), pady=5, sticky='nesw')
 
         self.img_salir = {"black": ImageTk.PhotoImage(Image.open("../recursos/salir_b.png").resize(mc.size_settings)), "red": ImageTk.PhotoImage(Image.open("../recursos/salir_r.png").resize(mc.size_settings))}#mc.img_salir
         self.lbl_salir = tk.Label(self.frame_settings, image=self.img_salir['black'], borderwidth=0, highlightthickness=0)
-        self.lbl_salir.grid(row=0, column=1, padx=2, pady=2, sticky='nesw')
+        self.lbl_salir.grid(row=0, column=1, padx=(8, 18), pady=5, sticky='nesw')
 
-        self.frame_modos = tk.LabelFrame(self.frame_general, background='white')
+        self.frame_modos = tk.LabelFrame(self.frame_general, background=mc.background, text='Modos de uso')
         self.frame_modos.grid(row=1, column=0)
 
         self.img_simple = {"black": ImageTk.PhotoImage(Image.open("../recursos/simple_b.png").resize(mc.size_modo)), "red": ImageTk.PhotoImage(Image.open("../recursos/simple_r.png").resize(mc.size_modo))}
@@ -421,16 +460,16 @@ class Gui(tk.Tk):
     def open_config(self):
         print(f'{__name__}: open_config()')
         self.wd_config = tk.Toplevel(self)
-        self.wd_config.title("Configuracion")
-        self.wd_config.geometry("%dx%d+%d+%d" % (350, 300, self.winfo_x()-0, self.winfo_y()-50))
-        self.wd_config.maxsize(350, 300)
-        self.wd_config.minsize(350, 300)
+        self.wd_config.title("Configuración")
+        self.wd_config.geometry("%dx%d+%d+%d" % (mc.wd_with_config, mc.wd_hight_config, self.winfo_x()-0, self.winfo_y()-50))
+        self.wd_config.maxsize(mc.wd_with_config, mc.wd_hight_config)
+        self.wd_config.minsize(mc.wd_with_config, mc.wd_hight_config)
         self.wd_config.resizable(False, False)
-        self.wd_config.configure(background='white')
+        self.wd_config.configure(background=mc.background)
         self.wd_config.overrideredirect(1) #sin botones minimizar, etc
         # ICONO
         # self.img_icon = ImageTk.PhotoImage(Image.open("../recursos/logo.jpg"))
-        self.wd_config.tk.call('wm', 'iconphoto', self.wd_config._w, self.img_icon)
+        # self.wd_config.tk.call('wm', 'iconphoto', self.wd_config._w, self.img_icon)
 
         mc.in_window = 'config' # antes de instanciar la ventana, para que el color_config() corra correctamente
         self.wd_config.wd = Window_config(self.wd_config)
@@ -453,15 +492,17 @@ class Gui(tk.Tk):
             self.wd_use.title("Modo avanzado")
         else:
             self.wd_use.title("Modo simple")
-        self.wd_use.geometry("%dx%d+%d+%d" % (370, 310, self.winfo_x()-40, self.winfo_y()-40))
-        self.wd_use.maxsize(370, 310)
-        self.wd_use.minsize(370, 310)
+        self.wd_use.geometry("%dx%d+%d+%d" % (mc.wd_with_use, mc.wd_hight_use, self.winfo_x()-40, self.winfo_y()-40))
+#        self.wd_use.geometry(f'{mc.wd_with_use}x{mc.wd_hight_use}')
+        self.set_position_use()
+        self.wd_use.maxsize(mc.wd_with_use, mc.wd_hight_use)
+        self.wd_use.minsize(mc.wd_with_use, mc.wd_hight_use)
         self.wd_use.resizable(False, False)
-        self.wd_use.configure(background='white')
+        self.wd_use.configure(background=mc.background)
         self.wd_use.overrideredirect(1) #sin botones minimizar, etc
         # ICONO
         # self.img_icon = ImageTk.PhotoImage(Image.open("../recursos/logo.jpg"))
-        self.wd_use.tk.call('wm', 'iconphoto', self.wd_use._w, self.img_icon)
+        # self.wd_use.tk.call('wm', 'iconphoto', self.wd_use._w, self.img_icon)
 
         mc.in_window = 'use' # antes de instanciar la ventana, para que el color_use() corra correctamente
         self.wd_use.wd = Window_use(self.wd_use)
@@ -470,6 +511,18 @@ class Gui(tk.Tk):
         self.wd_use.protocol('WM_DELETE_WINDOW', self.use_on_closing)
         self.withdraw()  # esconde mainwindow
         self.wd_use.attributes("-topmost", True)
+
+    def set_position_use(self):
+            if mc.wd_position == 0:
+                # coloca ventana en esquina superior derecha
+                self.wd_use.geometry("+{}+{}".format(int(self.winfo_screenwidth()-mc.wd_with_use), int(0)))
+            elif mc.wd_position == 1:
+                # coloca ventana en el centro
+                self.wd_use.geometry("+{}+{}".format(int(self.winfo_screenwidth()/2-mc.wd_with_use/2), int(self.winfo_screenheight()/2-mc.wd_hight_use/2)))
+            elif mc.wd_position == 2:
+                # coloca ventana en esquina inferior derecha
+                self.wd_use.geometry("+{}+{}".format(int(self.winfo_screenwidth()-mc.wd_with_use), int(self.winfo_screenheight()-mc.wd_hight_use)))
+
 
     def use_on_closing(self):
         print(f'{__name__}: use_on_closing()')
