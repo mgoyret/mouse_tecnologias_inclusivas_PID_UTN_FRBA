@@ -41,8 +41,8 @@ modo_esconder = 0
 wd_with_main = 300
 wd_hight_main = 290
 # tamano config
-wd_with_config = 350
-wd_hight_config = 480
+wd_with_config = 450
+wd_hight_config = 550
 # tamano use
 wd_with_use = 370
 wd_hight_use = 310
